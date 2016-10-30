@@ -17,26 +17,19 @@ local kIconTextureAlien = "ui/alien_commander_textures.dds"
 local kIconTextureMarine = "ui/marine_commander_textures.dds"
 local kTeamResourceIconCoords = {192, 363, 240, 411}
 local kResourceTowerIconCoords = {240, 363, 280, 411}
+local kBiomassIconCoords = GetTextureCoordinatesForIcon(kTechId.Biomass)
 local kBuildMenuTexture = "ui/buildmenu.dds"
+local kEggTexture = "ui/Gorge.dds"
 
 local kTimeFontName = Fonts.kAgencyFB_Medium
-local kTimeFontScale = GUIScale(Vector(1, 1, 0))
 local kMarineFontName = Fonts.kAgencyFB_Medium
 local kAlienFontName = Fonts.kAgencyFB_Medium
-local kTeamFontScale = GUIScale(Vector(1, 1, 0))
-
-local kScoreFontScale = GUIScale(Vector(1.2, 1.2, 0))
 
 local kInfoFontName = Fonts.kAgencyFB_Small
-local kInfoFontScale = GUIScale(Vector(1, 1, 0))
 
-local kBackgroundSize = GUIScale(Vector(400, 35, 0))
-local kScoresSize = GUIScale(Vector(50,32, 0))
-local kTeamNameSize = GUIScale(Vector(150, 24, 0))
-local kIconSize = GUIScale(Vector(32, 32, 0))
-local kButtonSize = GUIScale(Vector(8, 8, 0))
-
-local kButtonOffset = GUIScale(Vector(0,20,0))
+local kIconSize
+local kButtonSize
+local kButtonOffset
 
 local background
 local gameTime
@@ -53,11 +46,14 @@ local alienTeamScore
 
 local marineNameBackground
 local marineTeamName
+local marineResources
 local marineExtractors
 
 local alienNameBackground
 local alienTeamName
+local alienResources
 local alienHarvesters
+local alienBiomass
 
 local function CreateIconTextItem(team, parent, position, texture, coords)
 
@@ -76,19 +72,20 @@ local function CreateIconTextItem(team, parent, position, texture, coords)
     icon:SetAnchor(GUIItem.Left, GUIItem.Top)
     icon:SetPosition(position)
     icon:SetTexture(texture)
-    if coords ~= nil then
+    if coords then
         icon:SetTexturePixelCoordinates(unpack(coords))
     end
     background:AddChild(icon)
     
     local value = GUIManager:CreateTextItem()
     value:SetFontName(kInfoFontName)
-    value:SetScale(kInfoFontScale)
+    value:SetScale(GetScaledVector())
     value:SetAnchor(GUIItem.Left, GUIItem.Center)
     value:SetTextAlignmentX(GUIItem.Align_Min)
     value:SetTextAlignmentY(GUIItem.Align_Center)
     value:SetColor(Color(1, 1, 1, 1))
     value:SetPosition(position + Vector(kIconSize.x + GUIScale(5), 0, 0))
+    GUIMakeFontScale(value)
     background:AddChild(value)
     
     return value
@@ -124,10 +121,22 @@ local function GetTeamInfoStrings(teamInfo)
     
 end
 
-local kEggTexture = "ui/Gorge.dds"
+local function GetBioMassString(teamInfo)
+
+    if teamInfo.GetBioMassLevel then
+        return string.format("%d / 12", teamInfo:GetBioMassLevel())
+    end
+    
+    return ""
+
+end
 
 function GUIInsight_TopBar:Initialize()
 
+    kIconSize = GUIScale(Vector(32, 32, 0))
+    kButtonSize = GUIScale(Vector(8, 8, 0))
+    kButtonOffset = GUIScale(Vector(0,20,0))
+    
     isVisible = true
         
     local texSize = GUIScale(Vector(512,57,0))
@@ -143,13 +152,14 @@ function GUIInsight_TopBar:Initialize()
     
     gameTime = GUIManager:CreateTextItem()
     gameTime:SetFontName(kTimeFontName)
-    gameTime:SetScale(kTimeFontScale)
+    gameTime:SetScale(GetScaledVector())
     gameTime:SetAnchor(GUIItem.Middle, GUIItem.Top)
     gameTime:SetPosition(GUIScale(Vector(0, 5, 0)))
     gameTime:SetTextAlignmentX(GUIItem.Align_Center)
     gameTime:SetTextAlignmentY(GUIItem.Align_Min)
     gameTime:SetColor(Color(1, 1, 1, 1))
     gameTime:SetText("")
+    GUIMakeFontScale(gameTime)
     background:AddChild(gameTime)
     
     local scoresTexSize = GUIScale(Vector(512,71,0))
@@ -166,48 +176,57 @@ function GUIInsight_TopBar:Initialize()
     
     marineTeamScore = GUIManager:CreateTextItem()
     marineTeamScore:SetFontName(kTimeFontName)
-    marineTeamScore:SetScale(kScoreFontScale)
+    marineTeamScore:SetScale(GetScaledVector() * 1.2)
     marineTeamScore:SetAnchor(GUIItem.Middle, GUIItem.Center)
     marineTeamScore:SetTextAlignmentX(GUIItem.Align_Center)
     marineTeamScore:SetTextAlignmentY(GUIItem.Align_Center)
     marineTeamScore:SetPosition(GUIScale(Vector(-30, -5, 0)))
     marineTeamScore:SetColor(Color(1, 1, 1, 1))
+    GUIMakeFontScale(marineTeamScore)
     scoresBackground:AddChild(marineTeamScore)
     
     alienTeamScore = GUIManager:CreateTextItem()
     alienTeamScore:SetFontName(kTimeFontName)
-    alienTeamScore:SetScale(kScoreFontScale)
+    alienTeamScore:SetScale(GetScaledVector() * 1.2)
     alienTeamScore:SetAnchor(GUIItem.Middle, GUIItem.Center)
     alienTeamScore:SetTextAlignmentX(GUIItem.Align_Center)
     alienTeamScore:SetTextAlignmentY(GUIItem.Align_Center)
     alienTeamScore:SetPosition(GUIScale(Vector(30, -5, 0)))
     alienTeamScore:SetColor(Color(1, 1, 1, 1))
+    GUIMakeFontScale(alienTeamScore)
     scoresBackground:AddChild(alienTeamScore)
     
     marineTeamName = GUIManager:CreateTextItem()
     marineTeamName:SetFontName(kMarineFontName)
-    marineTeamName:SetScale(kTeamFontScale)
+    marineTeamName:SetScale(GetScaledVector())
     marineTeamName:SetAnchor(GUIItem.Middle, GUIItem.Center)
-    marineTeamName:SetTextAlignmentX(GUIItem.Align_Center)
+    marineTeamName:SetTextAlignmentX(GUIItem.Align_Max)
     marineTeamName:SetTextAlignmentY(GUIItem.Align_Center)
-    marineTeamName:SetPosition(GUIScale(Vector(-scoresTexSize.x/4, -7, 0)))
+    marineTeamName:SetPosition(GUIScale(Vector(-60, -7, 0)))
     marineTeamName:SetColor(Color(1, 1, 1, 1))
+    GUIMakeFontScale(marineTeamName)
     scoresBackground:AddChild(marineTeamName)
     
     alienTeamName = GUIManager:CreateTextItem()
     alienTeamName:SetFontName(kAlienFontName)
-    alienTeamName:SetScale(kTeamFontScale)
+    alienTeamName:SetScale(GetScaledVector())
     alienTeamName:SetAnchor(GUIItem.Middle, GUIItem.Center)
-    alienTeamName:SetTextAlignmentX(GUIItem.Align_Center)
+    alienTeamName:SetTextAlignmentX(GUIItem.Align_Min)
     alienTeamName:SetTextAlignmentY(GUIItem.Align_Center)
-    alienTeamName:SetPosition(GUIScale(Vector(scoresTexSize.x/4, -7, 0)))
+    alienTeamName:SetPosition(GUIScale(Vector(60, -7, 0)))
     alienTeamName:SetColor(Color(1, 1, 1, 1))
+    GUIMakeFontScale(alienTeamName)
     scoresBackground:AddChild(alienTeamName)
     
     local yoffset = GUIScale(4)
-    marineExtractors = CreateIconTextItem(kTeam1Index, background, Vector(GUIScale(90),yoffset,0), kEggTexture, nil)
+    --marineResources = CreateIconTextItem(kTeam1Index, background, Vector(GUIScale(130),yoffset,0), kIconTextureMarine, kTeamResourceIconCoords)
+    --marineExtractors = CreateIconTextItem(kTeam1Index, background, Vector(GUIScale(50),yoffset,0), kIconTextureMarine, kResourceTowerIconCoords)
+    marineExtractors = CreateIconTextItem(kTeam1Index, background, Vector(GUIScale(90), yoffset, 0), kEggTexture, nil)
 
-    alienHarvesters = CreateIconTextItem(kTeam2Index, background, Vector(-GUIScale(155),yoffset,0), kEggTexture, nil)
+    --alienResources = CreateIconTextItem(kTeam2Index, background, Vector(-GUIScale(195),yoffset,0), kIconTextureAlien, kTeamResourceIconCoords)
+    --alienHarvesters = CreateIconTextItem(kTeam2Index, background, Vector(-GUIScale(115),yoffset,0), kIconTextureAlien, kResourceTowerIconCoords)
+    --alienBiomass = CreateIconTextItem(kTeam2Index, background, Vector(-GUIScale(5),yoffset,0), kBuildMenuTexture, kBiomassIconCoords)
+    alienHarvesters = CreateIconTextItem(kTeam2Index, background, Vector(-GUIScale(155), yoffset, 0), kEggTexture, nil)
     
     teamsSwapButton = CreateButtonItem(scoresBackground, kButtonOffset, Color(1,1,1,0.5))
     teamsSwapButton:SetAnchor(GUIItem.Middle, GUIItem.Center)
@@ -320,16 +339,16 @@ function PlayerUI_GetSecondsRemaining()
     return points
         
 end
-
+    
 
 function GUIInsight_TopBar:Update(deltaTime)
-
+    
     local startTime = PlayerUI_GetGameStartTime()
         
     if startTime ~= 0 then
         startTime = math.floor(Shared.GetTime()) - PlayerUI_GetGameStartTime()
     end
-    
+
     -- quick hack to display round time instead.
     local timeRemaining = PlayerUI_GetSecondsRemaining()
     if timeRemaining > 0 then
