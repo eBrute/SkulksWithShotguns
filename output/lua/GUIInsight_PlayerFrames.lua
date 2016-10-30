@@ -1,12 +1,12 @@
-// ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
-//
-// lua\GUIInsight_PlayerFrames.lua
-//
-// Created by: Jon 'Huze' Hughes (jon@jhuze.com)
-//
-// Spectator: Displays player info
-//
-// ========= For more information, visit us at http://www.unknownworlds.com =====================
+-- ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
+--
+-- lua\GUIInsight_PlayerFrames.lua
+--
+-- Created by: Jon 'Huze' Hughes (jon@jhuze.com)
+--
+-- Spectator: Displays player info
+--
+-- ========= For more information, visit us at http://www.unknownworlds.com =====================
 
 class 'GUIInsight_PlayerFrames' (GUIScript)
 
@@ -298,7 +298,7 @@ function GUIInsight_PlayerFrames:UpdatePlayer(player, playerRecord, team, yPosit
         player.Frame:SetColor(Color(1,1,1,1))    
     end
        
-    //local resourcesStr = string.format("%d Res", playerRecord.Resources)
+    --local resourcesStr = string.format("%d Res", playerRecord.Resources)
     local KDRStr = string.format("%s / %s", playerRecord.Kills, playerRecord.Deaths)
     local currentPosition = Vector(player["Background"]:GetPosition())
     local newStatus = playerRecord.Status
@@ -307,7 +307,7 @@ function GUIInsight_PlayerFrames:UpdatePlayer(player, playerRecord, team, yPosit
     
     currentPosition.y = yPosition
     player["Background"]:SetPosition(currentPosition)
-    //player["Detail"]:SetText(resourcesStr)
+    --player["Detail"]:SetText(resourcesStr)
     player.KDR:SetText(KDRStr)
     player["Background"]:SetColor(teamColor)
     -- Name
@@ -534,15 +534,15 @@ function GUIInsight_PlayerFrames:CreateMarineBackground()
     background:AddChild(KDRitem)
     
     -- Res text item.
-    //local detailItem = GUIManager:CreateTextItem()
-    //detailItem:SetFontName(kInfoFontName)
-    //detailItem:SetScale(kInfoFontScale)
-    //detailItem:SetAnchor(GUIItem.Left, GUIItem.Middle)
-    //detailItem:SetTextAlignmentX(GUIItem.Align_Max)
-    //detailItem:SetTextAlignmentY(GUIItem.Align_Min)
-    //detailItem:SetPosition(Vector(kPlayersPanelSize.x, 0, 0))
-    //detailItem:SetColor(kInfoColor)
-    //background:AddChild(detailItem)
+    --local detailItem = GUIManager:CreateTextItem()
+    --detailItem:SetFontName(kInfoFontName)
+    --detailItem:SetScale(kInfoFontScale)
+    --detailItem:SetAnchor(GUIItem.Left, GUIItem.Middle)
+    --detailItem:SetTextAlignmentX(GUIItem.Align_Max)
+    --detailItem:SetTextAlignmentY(GUIItem.Align_Min)
+    --detailItem:SetPosition(Vector(kPlayersPanelSize.x, 0, 0))
+    --detailItem:SetColor(kInfoColor)
+    --background:AddChild(detailItem)
     
     -- Health bar item.
     local healthBar = GUIManager:CreateGraphicItem()
@@ -619,15 +619,15 @@ function GUIInsight_PlayerFrames:CreateAlienBackground()
     background:AddChild(KDRitem)
     
     -- Res text item.
-    //local detailItem = GUIManager:CreateTextItem()
-    //detailItem:SetFontName(kInfoFontName)
-    //detailItem:SetScale(kInfoFontScale)
-    //detailItem:SetAnchor(GUIItem.Left, GUIItem.Middle)
-    //detailItem:SetPosition(Vector(GUIScale(2), 0, 0))
-    //detailItem:SetTextAlignmentX(GUIItem.Align_Min)
-    //detailItem:SetTextAlignmentY(GUIItem.Align_Min)
-    //detailItem:SetColor(kInfoColor)
-    //background:AddChild(detailItem)
+    --local detailItem = GUIManager:CreateTextItem()
+    --detailItem:SetFontName(kInfoFontName)
+    --detailItem:SetScale(kInfoFontScale)
+    --detailItem:SetAnchor(GUIItem.Left, GUIItem.Middle)
+    --detailItem:SetPosition(Vector(GUIScale(2), 0, 0))
+    --detailItem:SetTextAlignmentX(GUIItem.Align_Min)
+    --detailItem:SetTextAlignmentY(GUIItem.Align_Min)
+    --detailItem:SetColor(kInfoColor)
+    --background:AddChild(detailItem)
     
     -- Health bar item.
     local healthBar = GUIManager:CreateGraphicItem()

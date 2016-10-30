@@ -8,7 +8,7 @@ local function TeamIndiscriminateGetHealTargets(self)
 
     local targets = {}
     
-    // priority on players
+    -- priority on players
     for _, player in ipairs(GetEntitiesWithinRange("Player", self:GetOrigin(), Crag.kHealRadius)) do
     
         if player:GetIsAlive() then

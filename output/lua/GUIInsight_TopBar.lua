@@ -1,12 +1,12 @@
-// ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
-//
-// lua\GUIInsight_TopBar.lua
-//
-// Created by: Jon 'Huze' Hughes (jon@jhuze.com)
-//
-// Spectator: Displays team names and gametime
-//
-// ========= For more information, visit us at http://www.unknownworlds.com =====================
+-- ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
+--
+-- lua\GUIInsight_TopBar.lua
+--
+-- Created by: Jon 'Huze' Hughes (jon@jhuze.com)
+--
+-- Spectator: Displays team names and gametime
+--
+-- ========= For more information, visit us at http://www.unknownworlds.com =====================
 
 class "GUIInsight_TopBar" (GUIScript)
 
@@ -330,7 +330,7 @@ function GUIInsight_TopBar:Update(deltaTime)
         startTime = math.floor(Shared.GetTime()) - PlayerUI_GetGameStartTime()
     end
     
-    // quick hack to display round time instead.
+    -- quick hack to display round time instead.
     local timeRemaining = PlayerUI_GetSecondsRemaining()
     if timeRemaining > 0 then
         startTime = timeRemaining

@@ -2,7 +2,7 @@
 local original_GetPointValue=PointGiverMixin.GetPointValue
 function PointGiverMixin:GetPointValue()
     
-    // bonus points for killing a flagbearer, decrease points for regular kills.
+    -- bonus points for killing a flagbearer, decrease points for regular kills.
     if kTeamModeEnabled and HasMixin(self, "Flagbearer") then
         if self:GetFlag() then
             return 11

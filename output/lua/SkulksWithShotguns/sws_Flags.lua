@@ -80,44 +80,44 @@ function Flag:OnCreate()
 end 
 
 
-// entity pickup self
+-- entity pickup self
 local function Pickup(self, entity)
 
         local enemyFlag = self:GetTeamNumber() ~= entity:GetTeamNumber()
 
-        // allow pickup of enemy entity only.
+        -- allow pickup of enemy entity only.
         if enemyFlag then
-            // enemy pickup
+            -- enemy pickup
             if not self.offBase then
                 self.offBase = true
                 
                 self:OnTaken()
                                 
-                // enemy team is taking gorge from base!
+                -- enemy team is taking gorge from base!
                 SendEventMessage(self:GetTeam(), kEventMessageTypes.EnemyStoleGorge, entity:GetClientIndex())
                 SendEventMessage(GetEnemyTeam(self:GetTeam()), kEventMessageTypes.TeamStoleGorge, entity:GetClientIndex())
 
-                // corresponding vocals.
+                -- corresponding vocals.
                 self:GetTeam():PlayPrivateTeamSound(kSfxGorgeStolenOur)
                 GetEnemyTeam(self:GetTeam()):PlayPrivateTeamSound(kSfxGorgeStolenTheir)
                 
-                // pickup flag.                
+                -- pickup flag.                
                 entity:AttachFlag(self)
             elseif self:GetParent() == nil then
             
                 self:OnTaken()
 
-                // enemy team is taking gorge from off base!
+                -- enemy team is taking gorge from off base!
                 SendEventMessage(self:GetTeam(), kEventMessageTypes.EnemyStoleGorge, entity:GetClientIndex())
                 SendEventMessage(GetEnemyTeam(self:GetTeam()), kEventMessageTypes.TeamStoleGorge, entity:GetClientIndex())
 
                 entity:AttachFlag(self)
             end
         else
-            // friendly pickup: respawn the flag!
+            -- friendly pickup: respawn the flag!
             if self.offBase then
             
-                // team recovered gorge
+                -- team recovered gorge
                 SendEventMessage(self:GetTeam(), kEventMessageTypes.TeamRecoveredGorge, entity:GetClientIndex())
                 SendEventMessage(GetEnemyTeam(self:GetTeam()), kEventMessageTypes.EnemyRecoveredGorge, entity:GetClientIndex())
                 rewardPoints(entity, kScorePointsRecoverGorge)
@@ -125,17 +125,17 @@ local function Pickup(self, entity)
                 self.offBase = false
                 DestroyEntity(self)
             else
-                // potential friendly delivery! :D CASH IN POINTSSSSSSSSSS
+                -- potential friendly delivery! :D CASH IN POINTSSSSSSSSSS
                 if entity:IsBearingFlag() then
 
-                    // team recovered gorge
+                    -- team recovered gorge
                     SendEventMessage(self:GetTeam(), kEventMessageTypes.TeamCapturedGorge, entity:GetClientIndex())
                     SendEventMessage(GetEnemyTeam(self:GetTeam()), kEventMessageTypes.EnemyCapturedGorge, entity:GetClientIndex())
                     
-                    // play vocals, but only if player is not about to win (which will spam sounds)
+                    -- play vocals, but only if player is not about to win (which will spam sounds)
                     local teamWon = (entity:GetTeam():GetPoints() >= kCaptureWinPoints-1)
                     if not teamWon then
-                        // corresponding vocals.
+                        -- corresponding vocals.
                         if entity:GetTeamNumber() == kVanillaTeamIndex then
                             entity:GetTeam():PlayPrivateTeamSound(kSfxRedScores)
                             GetEnemyTeam(entity:GetTeam()):PlayPrivateTeamSound(kSfxRedScores)
@@ -145,7 +145,7 @@ local function Pickup(self, entity)
                         end
                     end
                     
-                    // @todo: capture message.
+                    -- @todo: capture message.
                     GetGamerules():ScorePoint(entity)
                     DestroyEntity(entity:GetFlag())
                 end                
@@ -165,17 +165,17 @@ local function CheckEntityPickupFlag(self, entity)
         return false
     end    
     
-    // do not allow the dead to pick up flags.
+    -- do not allow the dead to pick up flags.
     if  HasMixin(entity, "Live") and not entity:GetIsAlive() then
         return false
     end
         
     local minePos = self:GetEngagementPoint()
     local targetPos = entity:GetEngagementPoint()
-    // Do not trigger through walls. But do trigger through other entities.
+    -- Do not trigger through walls. But do trigger through other entities.
     if not GetWallBetween(minePos, targetPos, entity) then
     
-        // If this fails, targets can sit in trigger, no "polling" update performed.
+        -- If this fails, targets can sit in trigger, no "polling" update performed.
         if Server then
             Pickup(self, entity)
             return true
@@ -193,7 +193,7 @@ local function CheckAllEntsInRangePickupFlag(self)
         local ents = self:GetEntitiesInTrigger()
         for e = 1, #ents do
             if CheckEntityPickupFlag(self, ents[e]) then
-                // abort checking if the entity has just been picked up /removed /whatever.
+                -- abort checking if the entity has just been picked up /removed /whatever.
                 return
             end
         end
@@ -252,13 +252,13 @@ function Flag:OnInitialized()
     
     if Server then
     
-        // prepare pickup logic.
+        -- prepare pickup logic.
         InitMixin(self, TriggerMixin)
         self:SetSphere(kFlagTriggerRange)
         
         self:OnDrop()
     
-        // This Mixin must be inited inside this OnInitialized() function.
+        -- This Mixin must be inited inside this OnInitialized() function.
         if not HasMixin(self, "MapBlip") then
             InitMixin(self, MapBlipMixin)
         end
@@ -304,7 +304,7 @@ if Server then
        
     function Flag:DetachReset()
         if self:GetParent() ~= nil then
-            //self:GetParent():DetachAll()   
+            --self:GetParent():DetachAll()   
             SendEventMessage(self:GetTeam(), kEventMessageTypes.TeamTimeoutGorge)
             SendEventMessage(GetEnemyTeam(self:GetTeam()), kEventMessageTypes.EnemyTimeoutGorge)                
             self:GetTeam():ResetRespawnFlag()                
@@ -323,10 +323,10 @@ if Server then
         
             self.lastTimeYelled = 0
         
-            // Move triggerbody if we lose parent
+            -- Move triggerbody if we lose parent
             self.triggerBody:SetCoords(self:GetCoords())
             
-            // respawn flag if it is on the floor for too long
+            -- respawn flag if it is on the floor for too long
             self.droppedTime = self.droppedTime or now
             if self.offBase and (now - self.droppedTime >= kFlagFloorTimeout) then 
                 SendEventMessage(self:GetTeam(), kEventMessageTypes.TeamTimeoutGorge)
@@ -335,7 +335,7 @@ if Server then
             end
         end
         
-        // The flags are always detected.
+        -- The flags are always detected.
         self:SetDetected(true)
     
         self.lastPickupUpdateTime = self.lastPickupUpdateTime or now
@@ -362,8 +362,8 @@ if Server then
 end
     
 function Flag:OnUpdatePhysics()
-    //CreateHitBox(self)
-    //self.hitBox:SetCoords(self:GetCoords())    
+    --CreateHitBox(self)
+    --self.hitBox:SetCoords(self:GetCoords())    
 end
 
 function Flag:GetPhysicsModelAllowedOverride()

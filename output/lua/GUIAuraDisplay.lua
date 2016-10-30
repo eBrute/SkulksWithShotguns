@@ -1,12 +1,12 @@
-// ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
-//
-// lua/GUIAuraDisplay.lua
-//
-// Shows how many shells, spurs, veils you have
-//
-// Created by Andreas Urwalek (andi@unknownworlds.com)
-//
-// ========= For more information, visit us at http://www.unknownworlds.com =====================
+-- ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
+--
+-- lua/GUIAuraDisplay.lua
+--
+-- Shows how many shells, spurs, veils you have
+--
+-- Created by Andreas Urwalek (andi@unknownworlds.com)
+--
+-- ========= For more information, visit us at http://www.unknownworlds.com =====================
 
 Shared.PrecacheSurfaceShader("shaders/GUIAura.surface_shader")
 
@@ -66,7 +66,7 @@ function GUIAuraDisplay:Update(deltaTime)
         
         for _, enemyPlayer in ientitylist(Shared.GetEntitiesWithClassname("Flag")) do
         
-              // looking in the right direction but obscured?
+              -- looking in the right direction but obscured?
               if viewDirection:DotProduct(GetNormalizedVector(enemyPlayer:GetOrigin() - eyePos)) > 0 and
                  not GetCanSeeEntity(player, enemyPlayer) then
                    table.insert(players, enemyPlayer)    
@@ -130,7 +130,7 @@ function GUIAuraDisplay:Update(deltaTime)
         local worldPos = enemy:GetOrigin() + offset
         local screenPos = Client.WorldToScreen(worldPos)
         
-        // hide when too close.
+        -- hide when too close.
         if ( (worldPos - eyePos):GetLength() < 2 ) then
             icon:SetIsVisible(false)
         end

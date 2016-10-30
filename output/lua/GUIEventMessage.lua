@@ -1,10 +1,10 @@
-// ======= Copyright (c) 2012, Unknown Worlds Entertainment, Inc. All rights reserved. ============
-//
-// lua\GUIEventMessage.lua
-//
-// Created by: Brian Cronin (brianc@unknownworlds.com)
-//
-// ========= For more information, visit us at http://www.unknownworlds.com =====================
+-- ======= Copyright (c) 2012, Unknown Worlds Entertainment, Inc. All rights reserved. ============
+--
+-- lua\GUIEventMessage.lua
+--
+-- Created by: Brian Cronin (brianc@unknownworlds.com)
+--
+-- ========= For more information, visit us at http://www.unknownworlds.com =====================
 
 Script.Load("lua/GUIAnimatedScript.lua")
 
@@ -12,7 +12,7 @@ local kBackgroundTexture = PrecacheAsset("ui/objective_banner_alien.dds")
 local kBackgroundNoiseTexture = PrecacheAsset("ui/alien_commander_bg_smoke.dds")
 local kBackgroundSize = Vector(1024, 128, 0)
 local kBackgroundPosition = Vector(-kBackgroundSize.x / 2, -300, 0)
-// Color starts faded away and fades in.
+-- Color starts faded away and fades in.
 local kMessageFontColor = Color(1, 0.8, 0.2)
 
 local kMessageFontName = "fonts/Stamp_large.fnt"

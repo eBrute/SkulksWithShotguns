@@ -16,15 +16,15 @@ kEventMessageTypes = enum({
 
 local kEventMessages = { }
 
-// This function will generate the string to display based on a clientIndex.
+-- This function will generate the string to display based on a clientIndex.
 local actorStringGen = function(clientIndex, messageString) 
 
-    // Unknown person.
+    -- Unknown person.
     local name = "Someone "
     
     name = Scoreboard_GetPlayerName(clientIndex) or name
     
-    // Keyword self as 'you'
+    -- Keyword self as 'you'
     local localPlayer = Client.GetLocalPlayer()
     if localPlayer ~= nil and clientIndex == localPlayer:GetClientIndex() then
         name = "You"
@@ -46,7 +46,7 @@ kEventMessages[kEventMessageTypes.TeamTimeoutGorge] = { text = function(data) re
 kEventMessages[kEventMessageTypes.StartTeamGame] = { text = function(data) return Locale.ResolveString("TEAM_GAME_STARTED") end }
 kEventMessages[kEventMessageTypes.StartDeathmatchGame] = { text = function(data) return Locale.ResolveString("DEATHMATCH_GAME_STARTED") end }
 
-// Silly name but it fits the convention.
+-- Silly name but it fits the convention.
 local kEventMessageMessage =
 {
     type = "enum kEventMessageTypes",

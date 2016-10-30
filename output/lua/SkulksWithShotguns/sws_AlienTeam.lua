@@ -4,7 +4,7 @@ if Server then
     Script.Load("lua/SkulksWithShotguns/sws_Skulks.lua")
     Script.Load("lua/SkulksWithShotguns/sws_AlienTeamInfo.lua")
     
-    // disable default structure spawning.   
+    -- disable default structure spawning.   
     function AlienTeam:SpawnInitialStructures(techPoint)
         return nil,nil
     end
@@ -21,9 +21,9 @@ if Server then
         
         self.respawnEntity = Skulk.kMapName
     
-        // List stores all the structures owned by builder player types such as the Gorge.
-        // This list stores them based on the player platform ID in order to maintain structure
-        // counts even if a player leaves and rejoins a server.
+        -- List stores all the structures owned by builder player types such as the Gorge.
+        -- This list stores them based on the player platform ID in order to maintain structure
+        -- counts even if a player leaves and rejoins a server.
         self.clientOwnedStructures = { }
         self.lastAutoHealIndex = 1
         
@@ -84,7 +84,7 @@ end
     
         if origin == nil or angles == nil then
     
-            // Randomly choose unobstructed spawn points to respawn the player
+            -- Randomly choose unobstructed spawn points to respawn the player
             local spawnPoint = nil
             local spawnPoints = self:GetSpawnLocations()
             local numSpawnPoints = table.maxn(spawnPoints)
@@ -98,7 +98,7 @@ end
             end
         end     
             
-        // Move origin up and drop it to floor to prevent stuck issues with floating errors or slightly misplaced spawns
+        -- Move origin up and drop it to floor to prevent stuck issues with floating errors or slightly misplaced spawns
         if origin ~= nil then
         
             SpawnPlayerAtPoint(player, origin, angles)
@@ -118,7 +118,7 @@ end
     
         local availableStalkSpots = { }
         
-        // determine free points.
+        -- determine free points.
         for index, current in ientitylist(Shared.GetEntitiesWithClassname("ResourcePoint")) do
            if current:GetAttached() == nil then
                availableStalkSpots[(#availableStalkSpots+1)] = current
@@ -127,10 +127,10 @@ end
         
         if #availableStalkSpots > 0 then        
         
-            // success! pick a random spot.
+            -- success! pick a random spot.
             return availableStalkSpots[math.random(1,#availableStalkSpots)]:SpawnResourceTowerForTeam(self, kTechId.Crag)
         else
-            // error!
+            -- error!
             return nil
         end
     end
@@ -176,10 +176,10 @@ end
     
     
     function AlienTeam:UpdateTeamAutoHeal(timePassed)
-        // disable infestation tracking/healing/damage completely.
+        -- disable infestation tracking/healing/damage completely.
     end
         
-    // override default spawning behaviour. we want to spawn at random location.
+    -- override default spawning behaviour. we want to spawn at random location.
     function AlienTeam:ResetTeam()
 
             self.conceded = false
@@ -191,13 +191,13 @@ end
         
             local stalks = { }
 
-            // count the number of stalk spots available..            local count = 0
+            -- count the number of stalk spots available..            local count = 0
             local count = Shared.GetEntitiesWithClassname("ResourcePoint"):GetSize() 
             
-            // don't spawn buildings for Shadow skulks in deathmatch mode.
+            -- don't spawn buildings for Shadow skulks in deathmatch mode.
             if kTeamModeEnabled or (self:GetTeamNumber() == kVanillaTeamIndex) then
                 
-                // place stalks in a random order.
+                -- place stalks in a random order.
                 while count > 0 do
                     hive = self:placeRandomStalkForTeam(resourcePoints)
                     if hive ~= nil then
@@ -224,18 +224,18 @@ end
             return nil
     end
     
-    // randomized egg spawning, instead of desired / proximate to death like vanilla.
+    -- randomized egg spawning, instead of desired / proximate to death like vanilla.
     local function CustomAssignPlayerToEgg(self, player, enemyTeamPosition)
         
         local team = player:GetTeam()
         if team ~= nil then
             if (team:GetTeamResources() <= 0) and not kTeamModeEnabled then
-                 // no resources remaining to spawn eggs! re-enter the queue with a big delay.
+                 -- no resources remaining to spawn eggs! re-enter the queue with a big delay.
                  player:SetRespawnQueueEntryTime(Shared.GetTime() + 5)
                 return false
             end
             
-            // manual replace respawn! We don't want the whole egg business. also fix it so we spawn shotgun skulks.
+            -- manual replace respawn! We don't want the whole egg business. also fix it so we spawn shotgun skulks.
             local success, player = team:ReplaceRespawnPlayer(player, nil, nil)
             if player ~= nil then
                 player:SetCameraDistance(0)
@@ -243,7 +243,7 @@ end
                 
                 player:TriggerEffects("teleport_end", { classname = player:GetClassName() })
                 
-                // pay for the respawn. PAY!                
+                -- pay for the respawn. PAY!                
                 if not kTeamModeEnabled then
                     team:AddTeamResources(-1)
                 end
@@ -256,10 +256,10 @@ end
     end
     
 
-    // we don't want egg generation. Instead, we ensure our flag is still here.
+    -- we don't want egg generation. Instead, we ensure our flag is still here.
     local function ExtendedAlienTeamUpdateMethod(self) 
     
-        // restore missing flag.
+        -- restore missing flag.
         shouldCheckForFlag = (self.timeLastFlagCheck or 0) + 1 < Shared.GetTime()
         if shouldCheckForFlag and not self:FlagExists() then
             self.timeLastFlagCheck = Shared.GetTime()
@@ -268,15 +268,15 @@ end
     end
 
     local function CustomUpdateEggCount(self)
-        // team resources count as eggs.
+        -- team resources count as eggs.
         self.eggCount = self:GetTeamResources()
     end
 
-    // we need to do this to replace egg spawning logic. 
+    -- we need to do this to replace egg spawning logic. 
     local updateAlienSpectators = GetLocalFunction(AlienTeam.Update, 'UpdateAlienSpectators')
     ReplaceLocals( updateAlienSpectators, {  AssignPlayerToEgg = CustomAssignPlayerToEgg } )
 
-    // replace egg spawning and counting logic.            
+    -- replace egg spawning and counting logic.            
     ReplaceLocals( AlienTeam.Update, { UpdateEggGeneration = ExtendedAlienTeamUpdateMethod, UpdateEggCount = CustomUpdateEggCount } )
 
 end

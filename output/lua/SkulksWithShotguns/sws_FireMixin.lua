@@ -14,7 +14,7 @@ local function SharedUpdate(self, deltaTime)
     
     if Server then
         
-        // See if we put ourselves out
+        -- See if we put ourselves out
         if Shared.GetTime() - self.timeBurnInit > kFlamethrowerBurnDuration then
             self:SetGameEffectMask(kGameEffect.OnFire, false)
         end

@@ -195,7 +195,7 @@ function Skulk:OnInitialized()
 
     -- SWS START
     if Server then
-        // Skulks With Shotguns - Add a babbler-shotgun on head node (don't ask). XD
+        -- Skulks With Shotguns - Add a babbler-shotgun on head node (don't ask). XD
         self.freeAttachPoints = { "babbler_attach3" }
         local babbler = CreateEntity(Babbler.kMapName, self:GetOrigin(), self:GetTeamNumber())
         self:AttachBabbler(babbler)

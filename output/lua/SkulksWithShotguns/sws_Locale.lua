@@ -1,5 +1,5 @@
 kCustomLocaleMessages = {
-    // @TODO cleanup unused.
+    -- @TODO cleanup unused.
     HIVE = 'Stalk',
     HIVE_TOOLTIP = 'Produces eggs for your team.',
     HIVE_HINT = 'Produces eggs for your team.',
@@ -20,14 +20,14 @@ kCustomLocaleMessages = {
     ALIEN_VICTORY = "Red Team Wins!",
     ALIEN_DEFEAT = "Red Team loses",
     
-    // %s=Playername
+    -- %s=Playername
     ENEMY_STOLE_GORGE = "%s stole your gorge!",
     ENEMY_RECOVERED_GORGE = "%s rescued their gorge!",
     ENEMY_CAPTURED_GORGE = "%s captured your gorge!",
     ENEMY_DROPPED_GORGE = "%s dropped enemy gorge!",   
     ENEMY_TIMEOUT_GORGE = "enemy gorge walked back!",   
 
-    // %s=You/Playername
+    -- %s=You/Playername
     TEAM_STOLE_GORGE = "%s grabbed enemy gorge!",
     TEAM_RECOVERED_GORGE = "%s recovered our gorge!",
     TEAM_CAPTURED_GORGE = "%s captured enemy gorge!",

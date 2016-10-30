@@ -1,14 +1,14 @@
-// ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
-//
-// lua\FlagbearerMixin.lua
-//
-//    Created by:   Andreas Urwalek (andi@unknownworlds.com)
-//
-//    Handles flags attaching to units.
-//
-// ========= For more information, visit us at http://www.unknownworlds.com =====================
+-- ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
+--
+-- lua\FlagbearerMixin.lua
+--
+--    Created by:   Andreas Urwalek (andi@unknownworlds.com)
+--
+--    Handles flags attaching to units.
+--
+-- ========= For more information, visit us at http://www.unknownworlds.com =====================
 
-// TODO: create better effect
+-- TODO: create better effect
 Shared.PrecacheSurfaceShader("cinematics/vfx_materials/parasited.surface_shader")
 local kMaterialName = "cinematics/vfx_materials/parasited.material"
 
@@ -89,7 +89,7 @@ if Server then
                 flag:SetOrigin(origin)
             end
         
-            // warn the gorge has been dropped.
+            -- warn the gorge has been dropped.
             SendEventMessage(flag:GetTeam(), kEventMessageTypes.TeamDroppedGorge, self:GetClientIndex())
             SendEventMessage(GetEnemyTeam(flag:GetTeam()), kEventMessageTypes.EnemyDroppedGorge, self:GetClientIndex())
 

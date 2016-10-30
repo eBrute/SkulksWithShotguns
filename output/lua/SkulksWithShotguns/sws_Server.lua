@@ -1,10 +1,10 @@
 
 
-// Misc
+-- Misc
 Script.Load("lua/SkulksWithShotguns/sws_NS2ConsoleCommands_Server.lua")
 Script.Load("lua/SkulksWithShotguns/sws_Respawn.lua")
 
-// Custom entity prepping for our mod.
+-- Custom entity prepping for our mod.
 local OriginalGetCreateEntityOnStart = GetCreateEntityOnStart
 function GetCreateEntityOnStart(mapName, groupName, values)
 
@@ -19,7 +19,7 @@ end
 Server.shadowSpawnList = table.array(64)
 Server.vanillaSpawnList = table.array(64)
 
-// Custom entity loading for our mod.
+-- Custom entity loading for our mod.
 local OriginalLoadSpecial = GetLoadSpecial
 function GetLoadSpecial(mapName, groupName, values)
 

@@ -3,7 +3,7 @@ local function PlaySound( self, soundEffect )
     Server.PlayPrivateSound(self, soundEffect, self, 1.0, Vector(0, 0, 0), true)
 end
 
-// Reward killstreaks!
+-- Reward killstreaks!
 function ScoringMixin:rewardKill()
     if Server then 
         if self.killstreak == 2 then 
@@ -28,7 +28,7 @@ function ScoringMixin:rewardKill()
         end
         
         
-        // Give players that achieve quick successive kills the fire effect which gives 1.3x damage boost.
+        -- Give players that achieve quick successive kills the fire effect which gives 1.3x damage boost.
         local now = Shared.GetTime()        
         self.lastKillTime = self.lastKillTime or 0
         if now - self.lastKillTime <= 3 then

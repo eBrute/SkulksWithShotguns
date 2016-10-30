@@ -1,12 +1,12 @@
-// ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
-//
-// lua\GUISpeedometer.lua
-//
-// Created by: Andreas Urwalek (a_urwa@sbox.tugraz.at)
-//
-// Manages the marine buy/purchase menu.
-//
-// ========= For more information, visit us at http://www.unknownworlds.com =====================
+-- ======= Copyright (c) 2003-2011, Unknown Worlds Entertainment, Inc. All rights reserved. =======
+--
+-- lua\GUISpeedometer.lua
+--
+-- Created by: Andreas Urwalek (a_urwa@sbox.tugraz.at)
+--
+-- Manages the marine buy/purchase menu.
+--
+-- ========= For more information, visit us at http://www.unknownworlds.com =====================
 
 Script.Load("lua/Globals.lua")
 Script.Load("lua/GUIDial.lua")
@@ -139,7 +139,7 @@ function GUISpeedometer:UpdateFading(fadeItem, itemFillPercentage, deltaTime)
     
     if itemFillPercentage < 0.5 then
     
-        // Check if we should start fading (itemFillPercentage just hit 100%).
+        -- Check if we should start fading (itemFillPercentage just hit 100%).
         if lastFadePercentage ~= nil and lastFadePercentage >= 5 then
             self:ForceUnfade(fadeItem)
         end       

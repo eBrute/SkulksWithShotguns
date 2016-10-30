@@ -1,12 +1,12 @@
 
-// retrieve function references for original local functions.
+-- retrieve function references for original local functions.
 local UpdateQueuePosition = GetLocalFunction(AlienSpectator.OnInitialized, 'UpdateQueuePosition')
 local UpdateWaveTime = GetLocalFunction(AlienSpectator.OnInitialized, 'UpdateWaveTime')
 function AlienSpectator:OnInitialized()
 
     TeamSpectator.OnInitialized(self)
 
-    // SWS FIX: self:SetTeamNumber(2)
+    -- SWS FIX: self:SetTeamNumber(2)
     
     self.eggId = Entity.invalidId
     self.queuePosition = 0

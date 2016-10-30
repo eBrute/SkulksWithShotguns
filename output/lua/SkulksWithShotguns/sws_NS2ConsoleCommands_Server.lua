@@ -1,17 +1,17 @@
 
-    // pick a random team, or Team2 for non team games
+    -- pick a random team, or Team2 for non team games
     local function GetRandomShotgunTeam()
     
-        // without teams we have deathmatch. put all in same team.
+        -- without teams we have deathmatch. put all in same team.
         if not kTeamModeEnabled then
             return kTeam2Index
         end
     
-        // Join team with less players or random.
+        -- Join team with less players or random.
         local team1Players = GetGamerules():GetTeam(kTeam1Index):GetNumPlayers()
         local team2Players = GetGamerules():GetTeam(kTeam2Index):GetNumPlayers()
         
-        // Join team with least.
+        -- Join team with least.
         if team1Players < team2Players then
             return kTeam1Index
         elseif team2Players < team1Players then

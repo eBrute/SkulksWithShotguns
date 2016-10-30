@@ -8,13 +8,13 @@ function Skulk:InitWeapons()
     self:GiveItem(Shotgun.kMapName)
     self:SetActiveWeapon(Shotgun.kMapName)
     
-	// spawn aliens with several seconds of umbra, to get to a safe location.
+	-- spawn aliens with several seconds of umbra, to get to a safe location.
     if Server then
         self:SetHasUmbra(true, kSpawnUmbraDuration)
     end      
 end
 
-// Disable buy menu for skulks.
+-- Disable buy menu for skulks.
 function Skulk:Buy()
     self:PlayEvolveErrorSound()
 end
@@ -67,11 +67,11 @@ function ShotgunSkulk:OnInitialized()
     Skulk.OnInitialized(self)
 
     if Server then 
-        // Skulks With Shotguns - Add a babbler-shotgun on head node (don't ask). XD
+        -- Skulks With Shotguns - Add a babbler-shotgun on head node (don't ask). XD
         self.freeAttachPoints = { "babbler_attach3" }
         local babbler = CreateEntity(Babbler.kMapName, self:GetOrigin(), self:GetTeamNumber())    
         self:AttachBabbler(babbler)
-        //babbler:SetGroundMoveType(true)
+        --babbler:SetGroundMoveType(true)
     end
     
 end
@@ -81,7 +81,7 @@ function ShotgunSkulk:GetMaxSpeed(possible)
 
     local speed = Skulk.GetMaxSpeed(self,possible)
     
-    // slow down flag bearing skulks just a tad so they can be effectively chased
+    -- slow down flag bearing skulks just a tad so they can be effectively chased
     if self:IsBearingFlag() then
         speed = speed * kSkulkSpeedFactorWhileCarryGorge
     end
@@ -97,13 +97,13 @@ function ShotgunSkulk:InitWeapons()
     self:GiveItem(Shotgun.kMapName)
     self:SetActiveWeapon(Shotgun.kMapName)
     
-	// spawn aliens with several seconds of umbra, to get to a safe location.
+	-- spawn aliens with several seconds of umbra, to get to a safe location.
     if Server then
         self:SetHasUmbra(true, kSpawnUmbraDuration)
     end      
 end
 
-// Disable buy menu for skulks.
+-- Disable buy menu for skulks.
 function ShotgunSkulk:Buy()
     self:PlayEvolveErrorSound()
 end

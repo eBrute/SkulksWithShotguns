@@ -5,7 +5,7 @@ if Server then
         return nil
     end
     
-    // stop anything from spawning initially.
+    -- stop anything from spawning initially.
     function PlayingTeam:SpawnInitialStructures(techPoint)
         return nil,nil
     end 

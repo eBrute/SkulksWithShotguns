@@ -1,8 +1,8 @@
-// number of eggs that can spawn in one round.
+-- number of eggs that can spawn in one round.
 kPlayingTeamInitialTeamRes = 99
 kTeamResourcePerTick = 0
 
-// Duration the spawn umbra is in effect.
+-- Duration the spawn umbra is in effect.
 kSpawnUmbraDuration = 1.25
 
 kTeam1Name = "Blue"
@@ -13,27 +13,27 @@ kShadowTeamIndex = kTeam1Index
 kVanillaTeamIndex = kTeam2Index
 
 
-// Personal points awarded for actions.
+-- Personal points awarded for actions.
 kScorePointsCapture = 75
 kScorePointsKillGorgeCarrier = 10
 kScorePointsRecoverGorge = 10
 kScorePointsTeamCapture = 25
 
-// Team captures required for win
+-- Team captures required for win
 kCaptureWinPoints = 5
 
-// Speed factor of shotgun skulks while carrying gorge (flag).
+-- Speed factor of shotgun skulks while carrying gorge (flag).
 kSkulkSpeedFactorWhileCarryGorge = 0.95
 
-// Seconds the gorge remains on the floor when dropped. 
-// important for if it gets lodged somewhere unreachable by accident.
+-- Seconds the gorge remains on the floor when dropped.
+-- important for if it gets lodged somewhere unreachable by accident.
 kFlagFloorTimeout = 45
 
-// SWS team mode.
+-- SWS team mode.
 kTeamModeEnabled = false
 kTeamModeTimelimit = (15 * 60) + 3
 
-// Tweak egg spawns.
+-- Tweak egg spawns.
 kAlienEggsPerHive = 5
 kAlienSpawnTime = 2
 kTeamAlienSpawnTime =  5
@@ -55,11 +55,11 @@ end
 
 local newEntityClasses = enum(  { "ShotgunSkulk", "Flag" } )
 
-// Register shotgunskulk
+-- Register shotgunskulk
 kPlayerStatus =  ConcatEnum(kPlayerStatus, newEntityClasses)
 kMinimapBlipType = ConcatEnum(kMinimapBlipType, newEntityClasses)
 
-// Introduce icons for new entities.
+-- Introduce icons for new entities.
 local Original_BuildClassToGrid = BuildClassToGrid
 function BuildClassToGrid()
    local result = Original_BuildClassToGrid()

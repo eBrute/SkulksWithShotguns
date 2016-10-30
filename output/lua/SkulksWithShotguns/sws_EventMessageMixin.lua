@@ -9,7 +9,7 @@ EventMessageMixin.expectedConstants =
 
 function EventMessageMixin:__initmixin()
 
-    // Only for use on the Client.
+    -- Only for use on the Client.
     assert(Client)
     
     self.eventMessageGUI = GetGUIManager():CreateGUIScript(self:GetMixinConstants().kGUIScriptName)
