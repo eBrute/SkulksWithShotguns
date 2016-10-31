@@ -9,6 +9,7 @@ Script.Load("lua/SkulksWithShotguns/sws_Locale.lua")
 Script.Load("lua/SkulksWithShotguns/sws_Utility.lua")
 Script.Load("lua/SkulksWithShotguns/sws_NS2Utility.lua")
 Script.Load("lua/SkulksWithShotguns/sws_EventMessenger.lua")
+Script.Load("lua/SkulksWithShotguns/sws_TechData.lua")
 
 // Mixin overrides
 Script.Load("lua/SkulksWithShotguns/sws_UmbraMixin.lua")

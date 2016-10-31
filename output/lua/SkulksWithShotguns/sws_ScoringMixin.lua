@@ -1,4 +1,3 @@
-
 local function PlaySound( self, soundEffect )
     Server.PlayPrivateSound(self, soundEffect, self, 1.0, Vector(0, 0, 0), true)
 end
@@ -43,3 +42,4 @@ function RewardOnFireEffect(self)
    self:SetOnFire()
    Shared:ShotgunMessage(self:GetName() .. " is on fire! (temporary Weapons III)")
 end
+
